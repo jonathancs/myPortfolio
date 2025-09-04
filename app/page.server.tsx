@@ -2,13 +2,10 @@ import { connectDB } from "./lib/db";
 import mongoose from "mongoose";
 import PageClient from "./page.client";
 
-// Define schema/model only if not already registered
 const FuelEntrySchema = new mongoose.Schema(
   {
-    date: Date,
-    liters: Number,
-    kilometers: Number,
-    cost: Number,
+    odometer: Number,
+    comments: String,
   },
   { collection: "fuelEntries" }
 );
@@ -19,8 +16,18 @@ const FuelEntry =
 export default async function PageServer() {
   await connectDB();
 
-  // Fetch from your fuelEntries collection
-  const entries = await FuelEntry.find().sort({ date: -1 }).lean();
+  const LIMIT = 7;
+  const entries = await FuelEntry.find({})
+    .sort({ odometer: -1 })
+    .limit(LIMIT)
+    .lean();
 
-  return <PageClient items={entries} />;
+  const plainEntries = entries.map((e) => ({
+    ...e,
+    _id: e._id.toString(),
+  }));
+
+  console.log("Fetched entries:", entries);
+
+  return <PageClient items={plainEntries} avgKmPerL={0} nextDate={null} />;
 }

@@ -1,18 +1,34 @@
 "use client";
 import { useState } from "react";
 
-export default function PageClient({ items }: { items: any[] }) {
-  const [average, setAverage] = useState("42 km");
-  const [nextDate, setNextDate] = useState("2025-09-01");
+type Entry = {
+  _id?: string;
+  date?: string | Date;
+  liters?: number;
+  kilometers?: number;
+  cost?: number;
+};
+
+export default function PageClient({
+  items,
+  avgKmPerL,
+  nextDate,
+}: {
+  items: Entry[];
+  avgKmPerL: number;
+  nextDate: string | null;
+}) {
+  // keep any other UI state you want here
+  const [dummy, setDummy] = useState(0);
 
   return (
     <main>
       <div>
-        {/* linktree wrapper */}
+        {/* linktree wrapper (unchanged) */}
         <div className="pt-24 pb-24 max-w-md mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between bg-gray-100 p-4 rounded-md">
             <p>Oi, bem-vindo 🙂</p>
-            <button className="text-sm">X</button>
+            <button className="text-sm" onClick={() => setDummy((d) => d + 1)}>X</button>
           </div>
 
           <div className="flex flex-col items-center space-y-3">
@@ -30,17 +46,28 @@ export default function PageClient({ items }: { items: any[] }) {
 
         {/* widgets wrapper */}
         <div className="bg-neutral-700 flex flex-wrap justify-center items-center p-10 gap-50">
-          <div className="m-4 w-110 h-100 border border-2 border-red-500">
+          <div className="m-4 w-110 h-100 border border-2 border-red-500 p-4 text-white">
             <ul className="space-y-2">
-              {items.map((item, i) => (
-                <li key={i} className="border-b pb-1">
-                  {JSON.stringify(item)}
+              {items.map((e, i) => (
+                <li key={i} className="border-b border-white/20 pb-1">
+                  <span className="font-medium">
+                    {e.date ? new Date(e.date).toISOString().slice(0,10) : "—"}
+                  </span>
+                  {" · "}
+                  {e.kilometers ?? "—"} km
+                  {" · "}
+                  {e.liters ?? "—"} L
+                  {typeof e.cost === "number" ? ` · R$ ${e.cost.toFixed(2)}` : ""}
                 </li>
               ))}
             </ul>
 
-            <p className="mt-4 font-bold">Average: {average}</p>
-            <p className="mt-4 font-bold">Next Date: {nextDate}</p>
+            <p className="mt-4 font-bold">
+              Average: {avgKmPerL} km/L
+            </p>
+            <p className="mt-4 font-bold">
+              Next Date: {nextDate ?? "—"}
+            </p>
           </div>
 
           <div className="m-4 w-110 h-100 border border-2 border-red-500"></div>
