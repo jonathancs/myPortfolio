@@ -3,23 +3,26 @@ import { useState } from "react";
 
 type Entry = {
   _id?: string;
-  date?: string | Date;
-  liters?: number;
-  kilometers?: number;
-  cost?: number;
+  odometer?: number;
+  comments?: string;
 };
+
+
 
 export default function PageClient({
   items,
-  avgKmPerL,
-  nextDate,
+  avgKMperTank,
+  avgKMperLiter,
+  nextKMFuel
 }: {
   items: Entry[];
-  avgKmPerL: number;
-  nextDate: string | null;
+  avgKMperTank: number;
+  avgKMperLiter: number;
+  nextKMFuel: number;
 }) {
   // keep any other UI state you want here
   const [dummy, setDummy] = useState(0);
+  console.log(items)
 
   return (
     <main>
@@ -28,19 +31,40 @@ export default function PageClient({
         <div className="pt-24 pb-24 max-w-md mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between bg-gray-100 p-4 rounded-md">
             <p>Oi, bem-vindo 🙂</p>
-            <button className="text-sm" onClick={() => setDummy((d) => d + 1)}>X</button>
+            <button className="text-sm" onClick={() => setDummy((d) => d + 1)}>
+              X
+            </button>
           </div>
 
           <div className="flex flex-col items-center space-y-3">
-            <img src="/avatar.png" alt="Avatar" className="w-24 h-24 rounded-full object-cover" />
+            <img
+              src="/avatar.png"
+              alt="Avatar"
+              className="w-24 h-24 rounded-full object-cover"
+            />
             <h1 className="text-2xl font-bold">Jonathan Casagrande</h1>
             <p className="text-gray-600">Programador</p>
           </div>
 
           <div className="flex flex-col space-y-3">
-            <a className="inline-block no-underline bg-gray-200 px-4 py-2 rounded-md text-center" href="https://wa.me/5551980120850">Whatsapp</a>
-            <a className="inline-block no-underline bg-gray-200 px-4 py-2 rounded-md text-center" href="https://instagram.com/casagrandejs">Instagram</a>
-            <a className="inline-block no-underline bg-gray-200 px-4 py-2 rounded-md text-center" href="https://www.linkedin.com/in/jonathancasagrande/">Linkedin</a>
+            <a
+              className="inline-block no-underline bg-gray-200 px-4 py-2 rounded-md text-center"
+              href="https://wa.me/5551980120850"
+            >
+              Whatsapp
+            </a>
+            <a
+              className="inline-block no-underline bg-gray-200 px-4 py-2 rounded-md text-center"
+              href="https://instagram.com/casagrandejs"
+            >
+              Instagram
+            </a>
+            <a
+              className="inline-block no-underline bg-gray-200 px-4 py-2 rounded-md text-center"
+              href="https://www.linkedin.com/in/jonathancasagrande/"
+            >
+              Linkedin
+            </a>
           </div>
         </div>
 
@@ -50,24 +74,14 @@ export default function PageClient({
             <ul className="space-y-2">
               {items.map((e, i) => (
                 <li key={i} className="border-b border-white/20 pb-1">
-                  <span className="font-medium">
-                    {e.date ? new Date(e.date).toISOString().slice(0,10) : "—"}
-                  </span>
-                  {" · "}
-                  {e.kilometers ?? "—"} km
-                  {" · "}
-                  {e.liters ?? "—"} L
-                  {typeof e.cost === "number" ? ` · R$ ${e.cost.toFixed(2)}` : ""}
+                  <span className="font-medium">{e.odometer ?? "—"}</span> km
                 </li>
               ))}
             </ul>
 
-            <p className="mt-4 font-bold">
-              Average: {avgKmPerL} km/L
-            </p>
-            <p className="mt-4 font-bold">
-              Next Date: {nextDate ?? "—"}
-            </p>
+            <p className="mt-4 font-bold">Average per tank: {avgKMperTank} km/L</p>
+            <p className="mt-4 font-bold">Average per litter: {avgKMperLiter} km/L</p>
+            <p className="mt-4 font-bold">Next Km fuel: {nextKMFuel ?? "—"}</p>
           </div>
 
           <div className="m-4 w-110 h-100 border border-2 border-red-500"></div>
