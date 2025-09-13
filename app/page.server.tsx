@@ -27,7 +27,10 @@ export default async function PageServer() {
     _id: e._id.toString(),
   }));
 
-  console.log("Fetched entries:", entries);
+  const n = plainEntries.length
+  const avgKMperTank = Math.floor( (plainEntries[0].odometer - plainEntries[n-1].odometer) / (n-1) )
+  const avgKMperLiter = Math.floor(avgKMperTank / 12 )
+  const nextKMFuel = Math.floor(plainEntries[0].odometer + avgKMperTank)
 
-  return <PageClient items={plainEntries} avgKmPerL={0} nextDate={null} />;
+  return <PageClient items={plainEntries} avgKMperLiter={avgKMperLiter} avgKMperTank={avgKMperTank} nextKMFuel={nextKMFuel} />;
 }
