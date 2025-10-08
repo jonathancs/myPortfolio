@@ -1,13 +1,12 @@
 "use client";
 import { useState } from "react";
+import FuelWidget from "./components/FuelWidget";
 
 type Entry = {
   _id?: string;
   odometer?: number;
   comments?: string;
 };
-
-
 
 export default function PageClient({
   items,
@@ -68,25 +67,13 @@ export default function PageClient({
           </div>
         </div>
 
-        {/* widgets wrapper */}
-        <div className="bg-neutral-700 flex flex-wrap justify-center items-center p-10 gap-50">
-          <div className="m-4 w-110 h-100 border border-2 border-red-500 p-4 text-white">
-            <ul className="space-y-2">
-              {items.map((e, i) => (
-                <li key={i} className="border-b border-white/20 pb-1">
-                  <span className="font-medium">{e.odometer ?? "—"}</span> km
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-4 font-bold">Average per tank: {avgKMperTank} km/L</p>
-            <p className="mt-4 font-bold">Average per litter: {avgKMperLiter} km/L</p>
-            <p className="mt-4 font-bold">Next Km fuel: {nextKMFuel ?? "—"}</p>
-          </div>
-
-          <div className="m-4 w-110 h-100 border border-2 border-red-500"></div>
-          <div className="m-4 w-110 h-100 border border-2 border-red-500"></div>
-        </div>
+        <FuelWidget 
+          items={items} 
+          avgKMperTank={avgKMperTank} 
+          avgKMperLiter={avgKMperLiter} 
+          nextKMFuel={nextKMFuel}
+        />
+        
       </div>
     </main>
   );
