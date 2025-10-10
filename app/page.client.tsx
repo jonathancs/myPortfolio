@@ -12,7 +12,7 @@ export default function PageClient({
   items,
   avgKMperTank,
   avgKMperLiter,
-  nextKMFuel
+  nextKMFuel,
 }: {
   items: Entry[];
   avgKMperTank: number;
@@ -21,11 +21,11 @@ export default function PageClient({
 }) {
   // keep any other UI state you want here
   const [dummy, setDummy] = useState(0);
-  console.log(items)
+  console.log(items);
 
   return (
-    <main>
-      <div>
+    <main className="flex flex-col items-center">
+      <div className="pt-24 pb-24 max-w-md mx-auto">
         {/* linktree wrapper (unchanged) */}
         <div className="pt-24 pb-24 max-w-md mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between bg-gray-100 p-4 rounded-md">
@@ -66,14 +66,22 @@ export default function PageClient({
             </a>
           </div>
         </div>
-
-        <FuelWidget 
-          items={items} 
-          avgKMperTank={avgKMperTank} 
-          avgKMperLiter={avgKMperLiter} 
-          nextKMFuel={nextKMFuel}
-        />
-        
+      </div>
+      <div className="grid grid-cols-2 gap-12 justify-center place-items-center">
+        <div className="flex gap-40 justify-center flex-wrap">
+          <FuelWidget
+            items={items}
+            avgKMperTank={avgKMperTank}
+            avgKMperLiter={avgKMperLiter}
+            nextKMFuel={nextKMFuel}
+          />
+          <FuelWidget
+            items={items}
+            avgKMperTank={avgKMperTank}
+            avgKMperLiter={avgKMperLiter}
+            nextKMFuel={nextKMFuel}
+          />
+        </div>
       </div>
     </main>
   );

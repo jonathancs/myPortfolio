@@ -18,10 +18,10 @@ export default function FuelWidget({
   nextKMFuel: number;
 }) {
   return (
-    <div className="mt-20 inset-0 flex justify-center items-center">
+    <div className="relative flex flex-col items-center">
       {/* back layers */}
-      <div className="absolute w-[350px] h-[400px] translate-x-6 -translate-y-8 rounded-xl border-4 border-orange-900 bg-orange-300 z-0" />
-      <div className="absolute w-[350px] h-[400px] translate-x-3 -translate-y-4 rounded-xl border-4 border-orange-900 bg-orange-200 z-10" />
+      <div className="absolute w-[350px] h-[400px] translate-x-7 -translate-y-8 rounded-xl border-4 border-orange-900 bg-orange-300 z-0" />
+      <div className="absolute w-[350px] h-[400px] translate-x-4 -translate-y-4 rounded-xl border-4 border-orange-900 bg-orange-200 z-10" />
 
       {/* main window */}
       <div className="relative w-[350px] h-[400px] rounded-xl border-4 border-orange-900 bg-orange-100 p-4 text-black shadow-[5px_5px_0_rgba(0,0,0,0.55)] z-20">
@@ -43,5 +43,10 @@ export default function FuelWidget({
         <p className="mt-1 text-sm font-bold">Next Km fuel: {nextKMFuel ?? "—"}</p>
       </div>
     </div>
+
+
+
+
+    
   );
 }
